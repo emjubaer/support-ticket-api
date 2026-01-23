@@ -60,6 +60,16 @@ class User extends Authenticatable
         return $this->role === UserRole::Admin;
     }
 
+    public function isAgent(): bool
+    {
+        return $this->role === UserRole::Agent;
+    }
+
+    public function isCustomer(): bool
+    {
+        return $this->role === UserRole::Customer;
+    }
+
     // public function doSomething(): static
     // {
     //     // do something

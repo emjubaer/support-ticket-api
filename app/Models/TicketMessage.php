@@ -6,5 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class TicketMessage extends Model
 {
-    //
+    protected $fillable = [
+        'ticket_id',
+        'user_id',
+        'message',
+    ];
+
+    // Relationships
+    public function ticket()
+    {
+        return $this->belongsTo(Ticket::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    
 }
