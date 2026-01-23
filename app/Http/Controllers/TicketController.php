@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\TicketPriority;
 use App\Enums\TicketStatus;
 use App\Http\Requests\StoreTicketRequest;
+use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
 use App\Services\TicketService;
 use Illuminate\Http\Request;
@@ -16,7 +17,9 @@ class TicketController extends Controller
      */
     public function index(Request $request)
     {
-        return $request->user()->tickets()->latest()->paginate(10);
+        return TicketResource::collection(
+            $request->user()->tickets()->with('messages')->latest()->paginate(10)
+        );
     }
 
     /**
@@ -24,10 +27,14 @@ class TicketController extends Controller
      */
     public function store(StoreTicketRequest $request, TicketService $ticketService)
     {
-        $ticket = $ticketService->createTicket($request->user(), $request->subject);
+        $ticket = $ticketService->createTicket(
+            $request->user(),
+            $request->subject,
+            $request->message
+        );
 
         return response()->json([
-            'message' => "Ticket created succsessfull.",
+            'message' => "Ticket created successfully.",
             'ticket' => $ticket,
         ]);
     }
@@ -37,7 +44,7 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        return response()->json($ticket);
+        return TicketResource::make($ticket->load('messages.user', 'customer'));
     }
 
     /**

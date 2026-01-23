@@ -25,6 +25,7 @@ class StoreTicketRequest extends FormRequest
     {
         return [
             'subject' => ['required', 'string', 'max:100'],
+            'message' => ['required', 'string', 'max:500'],
         ];
     }
 }

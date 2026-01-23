@@ -8,6 +8,13 @@ use App\Enums\TicketPriority;
 
 class Ticket extends Model
 {
+    protected $casts = [
+        'closed_at' => 'datetime',
+        'status' => TicketStatus::class,
+        'priority' => TicketPriority::class,
+
+    ];
+
     protected $fillable = [
         'user_id',
         'agent_id',
@@ -18,24 +25,23 @@ class Ticket extends Model
     ];
 
     // Relationships
-    public function customer()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
-
     public function agent()
     {
         return $this->belongsTo(User::class, 'agent_id');
     }
 
-    protected $casts = [
-        'closed_at' => 'datetime',
-        'status' => TicketStatus::class,
-        'priority' => TicketPriority::class,
+    public function customer()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
-    ];
+    public function messages()
+    {
+        return $this->hasMany(TicketMessage::class);
+    }
 
-    // Status check methods
+
+    // Helpers
     public function isOpen(): bool
     {
         return $this->status === TicketStatus::Open;
@@ -53,12 +59,4 @@ class Ticket extends Model
     {
         return $this->status === TicketStatus::Closed;
     }
-
-
-    // Priority check methods
-
-
-
-
-
 }
