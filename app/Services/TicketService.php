@@ -11,9 +11,12 @@ use Illuminate\Support\Facades\DB;
 
 class TicketService
 {
-    public function createTicket(User $user, string $subject, string $message): Ticket
-    {
-        return DB::transaction(function() use ($user, $subject, $message) {
+    public function createTicket(
+        string $subject,
+        User $user,
+        string $message
+    ): Ticket {
+        return DB::transaction(function () use ($user, $subject, $message) {
             // $ticket =  Ticket::create([
             //     'user_id' => $user->id,
             //     'subject' => $subject,
@@ -40,5 +43,28 @@ class TicketService
 
             return $ticket->load('messages');
         });
+    }
+
+    public function addMessageToTicket(
+        Ticket $ticket,
+        User $user,
+        string $message
+    ) {
+        return $ticket->messages()->create([
+            'user_id' => $user->id,
+            'message' => $message,
+        ]);
+    }
+    public function updateStatus(Ticket $ticket, string $newStatus): bool
+    {
+        if (!$ticket->canChangeToStatus(TicketStatus::from($newStatus))) {
+            return false;
+        }
+
+        $ticket->update([
+            'status' => $newStatus
+        ]);
+
+        return true;
     }
 }

@@ -55,8 +55,19 @@ class Ticket extends Model
     {
         return $this->status === TicketStatus::Resolved;
     }
+
     public function isClosed(): bool
     {
         return $this->status === TicketStatus::Closed;
+    }
+    
+    public function canChangeToStatus(TicketStatus $newStatus): bool
+    {
+        if ($this->isOpen()) return $newStatus === TicketStatus::InProgress;   //current resolved , input open
+        if ($this->isInProgress()) return $newStatus === TicketStatus::Resolved;
+        if ($this->isResolved()) return $newStatus === TicketStatus::Closed;
+        if ($this->isClosed()) return false;
+
+        return false;
     }
 }

@@ -9,6 +9,7 @@ use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
 use App\Services\TicketService;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class TicketController extends Controller
 {
@@ -28,15 +29,15 @@ class TicketController extends Controller
     public function store(StoreTicketRequest $request, TicketService $ticketService)
     {
         $ticket = $ticketService->createTicket(
-            $request->user(),
             $request->subject,
+            $request->user(),
             $request->message
         );
 
         return response()->json([
             'message' => "Ticket created successfully.",
             'ticket' => $ticket,
-        ]);
+        ], 201);
     }
 
     /**
@@ -50,9 +51,20 @@ class TicketController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function updateStatus(Request $request, Ticket $ticket, TicketService $ticketService)
     {
-        //
+        $request->validate([
+            'status' => ['required', Rule::in(TicketStatus::values())]
+        ]);
+
+        $isUpdated =  $ticketService->updateStatus(
+            $ticket,
+            $request->status
+        );
+
+        return response()->json(
+            ['message' => $isUpdated ? "Update Successfully." : "Something went wrong"]
+        );
     }
 
     /**

@@ -8,4 +8,9 @@ enum TicketStatus: string
     case InProgress = 'in_progress';
     case Resolved = 'resolved';
     case Closed = 'closed';
+
+    public static function values(): array
+    {
+        return array_column(static::cases(), 'value');
+    }
 }
