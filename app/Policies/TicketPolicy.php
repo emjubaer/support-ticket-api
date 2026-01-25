@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\TicketStatus;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -32,9 +33,9 @@ class TicketPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Ticket $ticket): bool
+    public function updateStatus(User $user, Ticket $ticket, string $newStatus): bool
     {
-        return $user->isAdmin() || $user->isAgent();
+        return $user->isAdmin() || $user->isAgent() && $ticket->canChangeToStatus(TicketStatus::from($newStatus));
     }
 
     public function assignAgent(User $user, Ticket $ticket): bool

@@ -8,6 +8,7 @@ use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
+use function Symfony\Component\Clock\now;
 
 class TicketService
 {
@@ -57,14 +58,9 @@ class TicketService
     }
     public function updateStatus(Ticket $ticket, string $newStatus): bool
     {
-        if (!$ticket->canChangeToStatus(TicketStatus::from($newStatus))) {
-            return false;
-        }
-
-        $ticket->update([
-            'status' => $newStatus
+        return $ticket->update([
+            'status' => $newStatus,
+            'closed_at' => TicketStatus::from($newStatus) === TicketStatus::Closed ? now() : null,
         ]);
-
-        return true;
     }
 }

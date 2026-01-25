@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\TicketPriority;
 use App\Enums\TicketStatus;
+use App\Http\Requests\StatusChangeRequest;
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
@@ -46,16 +47,11 @@ class TicketController extends Controller
     public function show(Ticket $ticket)
     {
         return TicketResource::make($ticket->load('messages.user', 'customer'));
-    }
-
-    /**
+    }    /**
      * Update the specified resource in storage.
      */
-    public function updateStatus(Request $request, Ticket $ticket, TicketService $ticketService)
+    public function updateStatus(StatusChangeRequest $request, Ticket $ticket, TicketService $ticketService)
     {
-        $request->validate([
-            'status' => ['required', Rule::in(TicketStatus::values())]
-        ]);
 
         $isUpdated =  $ticketService->updateStatus(
             $ticket,
