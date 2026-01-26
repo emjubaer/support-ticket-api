@@ -64,11 +64,11 @@ class TicketService
         ]);
     }
 
-    public function assignAgentToTicket(Ticket $ticket, int $id){
-        
+    public function assignAgentToTicket(Ticket $ticket, int $id, string $priority): void{
 
         $ticket->update([
             'agent_id' => $id,
+            'priority' => $priority,
         ]);
     }
 }

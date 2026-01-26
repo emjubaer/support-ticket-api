@@ -38,7 +38,7 @@ class TicketPolicy
         return $user->isAdmin() || $user->isAgent() && $ticket->canChangeToStatus(TicketStatus::from($newStatus));
     }
 
-    public function assignAgent(User $user, Ticket $ticket): bool
+    public function assign(User $user, Ticket $ticket): bool
     {
         return $user->isAdmin();
     }

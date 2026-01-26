@@ -67,24 +67,25 @@ class TicketController extends Controller
 
     public function assignAgent(Request $request, Ticket $ticket, TicketService $ticketService)
     {
-        $this->authorize('assignAgent', $ticket);
+        $this->authorize('assign', $ticket);
 
         $request->validate([
-            'agent_id' => ['required', 'integer', 'exists:users,id']
+            'agent_id' => ['required', 'integer', 'exists:users,id'],
+            'priority' => ['required', Rule::in(TicketPriority::cases())]
         ]);
 
         $agent = User::find($request->agent_id);
-        
+
         if (!$agent->isAgent()) {
             return response()->json(
                 ['message' => "The selected user is not an agent."]
             );
         }
 
-        $ticketService->assignAgentToTicket($ticket, $request->agent_id);
+        $ticketService->assignAgentToTicket($ticket, $request->agent_id, $request->priority);
 
         return response()->json(
-            ['message' => "Agent assigned successfully."]
+            ['message' => "Agent & Priority assigned successfully."]
         );
     }
 
