@@ -17,12 +17,30 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::updateOrCreate([
-            'email' => 'test@example.com',
+            'email' => 'customer@example.com',
         ], [
-            'name' => 'Test User',
+            'name' => 'Customer User',
             'password' => 'password',
             'role' => UserRole::Customer,
         ]);
+
+        User::updateOrCreate([
+            'email' => 'agent@example.com',
+        ], [
+            'name' => 'Agent',
+            'password' => 'password',
+            'role' => UserRole::Agent,
+        ]);
+
+        User::updateOrCreate([
+            'email' => 'admin@example.com',
+        ], [
+            'name' => 'Admin User',
+            'password' => 'password',
+            'role' => UserRole::Admin,
+        ]);
+
+
 
         // User::create([
         //     'email' => 'test@example.com',

@@ -66,7 +66,6 @@ class User extends Authenticatable
     {
         return $this->role === UserRole::Agent;
     }
-
     public function isCustomer(): bool
     {
         return $this->role === UserRole::Customer;

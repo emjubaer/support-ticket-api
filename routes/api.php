@@ -22,5 +22,6 @@ Route::middleware('auth:sanctum')->group(function(){
 
 // • PATCH /api/tickets/{id}/status (Agent/Admin)
     Route::patch('/tickets/{ticket}/status', [TicketController::class, 'updateStatus']);
+    Route::patch('/tickets/{ticket}/assign', [TicketController::class, 'assignAgent']);
     Route::post('/tickets/{ticket}/messages', [TicketMessageController::class, 'store']);
 });

@@ -63,4 +63,12 @@ class TicketService
             'closed_at' => TicketStatus::from($newStatus) === TicketStatus::Closed ? now() : null,
         ]);
     }
+
+    public function assignAgentToTicket(Ticket $ticket, int $id){
+        
+
+        $ticket->update([
+            'agent_id' => $id,
+        ]);
+    }
 }

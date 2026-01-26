@@ -8,6 +8,7 @@ use App\Http\Requests\StatusChangeRequest;
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
+use App\Models\User;
 use App\Services\TicketService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -47,7 +48,8 @@ class TicketController extends Controller
     public function show(Ticket $ticket)
     {
         return TicketResource::make($ticket->load('messages.user', 'customer'));
-    }    /**
+    }
+    /**
      * Update the specified resource in storage.
      */
     public function updateStatus(StatusChangeRequest $request, Ticket $ticket, TicketService $ticketService)
@@ -60,6 +62,29 @@ class TicketController extends Controller
 
         return response()->json(
             ['message' => $isUpdated ? "Update Successfully." : "Something went wrong"]
+        );
+    }
+
+    public function assignAgent(Request $request, Ticket $ticket, TicketService $ticketService)
+    {
+        $this->authorize('assignAgent', $ticket);
+
+        $request->validate([
+            'agent_id' => ['required', 'integer', 'exists:users,id']
+        ]);
+
+        $agent = User::find($request->agent_id);
+        
+        if (!$agent->isAgent()) {
+            return response()->json(
+                ['message' => "The selected user is not an agent."]
+            );
+        }
+
+        $ticketService->assignAgentToTicket($ticket, $request->agent_id);
+
+        return response()->json(
+            ['message' => "Agent assigned successfully."]
         );
     }
 
