@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\TicketPriority;
 use App\Enums\TicketStatus;
+use App\Http\Requests\AddMessageRequest;
 use App\Http\Requests\StatusChangeRequest;
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Resources\TicketResource;
@@ -54,7 +55,6 @@ class TicketController extends Controller
      */
     public function updateStatus(StatusChangeRequest $request, Ticket $ticket, TicketService $ticketService)
     {
-
         $isUpdated =  $ticketService->updateStatus(
             $ticket,
             $request->status
