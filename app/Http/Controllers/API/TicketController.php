@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\Enums\TicketPriority;
-use App\Enums\TicketStatus;
-use App\Http\Requests\AddMessageRequest;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StatusChangeRequest;
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Resources\TicketResource;
@@ -71,7 +70,6 @@ class TicketController extends Controller
 
         $request->validate([
             'agent_id' => ['required', 'integer', 'exists:users,id'],
-            'priority' => ['required', Rule::in(TicketPriority::cases())]
         ]);
 
         $agent = User::find($request->agent_id);
@@ -82,11 +80,26 @@ class TicketController extends Controller
             );
         }
 
-        $ticketService->assignAgentToTicket($ticket, $request->agent_id, $request->priority);
+        $ticketService->assignAgentToTicket($ticket, $request->agent_id,);
 
         return response()->json(
-            ['message' => "Agent & Priority assigned successfully."]
+            ['message' => "Agent assigned successfully."]
         );
+    }
+
+    public function assignPriority(Request $request, Ticket $ticket, TicketService $ticketService)
+    {
+        $this->authorize('assign', $ticket);
+
+        $request->validate([
+            'priority' => ['required', Rule::in(TicketPriority::values())]
+        ]);
+
+        $ticketService->assignPriorityToTicket($ticket, $request->priority);
+
+        return response()->json([
+            'message' => "Priority Assign Successful."
+        ]);
     }
 
     /**

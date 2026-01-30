@@ -7,6 +7,7 @@ use App\Enums\TicketStatus;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Ramsey\Uuid\Type\Time;
 
 use function Symfony\Component\Clock\now;
 
@@ -64,10 +65,15 @@ class TicketService
         ]);
     }
 
-    public function assignAgentToTicket(Ticket $ticket, int $id, string $priority): void{
-
+    public function assignAgentToTicket(Ticket $ticket, int $id,): void
+    {
         $ticket->update([
             'agent_id' => $id,
+        ]);
+    }
+
+    public function assignPriorityToTicket(Ticket $ticket, string $priority){
+        $ticket->update([
             'priority' => $priority,
         ]);
     }

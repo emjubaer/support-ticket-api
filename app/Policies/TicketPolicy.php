@@ -47,9 +47,10 @@ class TicketPolicy
     {
         if ($ticket->isClosed()) return false;
 
-        if ($user->isAdmin() || $user->isAgent()) return true;
+        if ($user->isAdmin()) return true;
+
+        if ($user->isAgent() && $ticket->agent_id === $user->id) return true;
 
         return $ticket->user_id === $user->id;
     }
-
 }
