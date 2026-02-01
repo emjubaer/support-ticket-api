@@ -9,8 +9,10 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-
-    public function register(Request $request)
+    public function register(){
+        return view('auth.register');
+    }
+    public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|string',
@@ -38,8 +40,12 @@ class LoginController extends Controller
             $request->session()->regenerate();
             return redirect()->route('dashboard');
         }
-        
-        return redirect()->back()->withErrors(['email' => 'Invalid credentials.']);
+
+        return redirect()->back()->with('error', 'Invalid credentials.');
+    }
+
+    public function show(){
+        return view('auth.login');
     }
 }
 

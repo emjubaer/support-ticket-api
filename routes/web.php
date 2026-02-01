@@ -16,8 +16,12 @@ Route::middleware(['auth'])->group(function () {
     })->name('dashboard');
 });
 
-Route::post('/login', [LoginController::class, 'login'])->name('login');
-Route::post('/register', [LoginController::class, 'register']);
+Route::get('/login', [LoginController::class, 'show'])->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('login.post');
+
+Route::get('/register', [LoginController::class, 'register'])->name('register');
+Route::post('/register', [LoginController::class, 'store'])->name('register.post');
+
 Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
 
 Route::middleware('auth')->group(function () {
