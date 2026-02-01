@@ -12,15 +12,15 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        return view('admin/dashboard');
     })->name('dashboard');
 });
 
-Route::post('/login', [LoginController::class, 'login']);
+Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/register', [LoginController::class, 'register']);
-Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
+Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('/tickets', [TicketController::class, 'index'])->can('viewAny', App\Models\Ticket::class);
     Route::post('/tickets', [TicketController::class, 'store']);
     Route::get('/tickets/{ticket}', [TicketController::class, 'show']);

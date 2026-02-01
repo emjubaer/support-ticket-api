@@ -24,10 +24,7 @@ class LoginController extends Controller
             'password' => bcrypt($request->password),
         ]);
 
-        return response()->json([
-            'message' => 'User created successfully',
-            'user' => $user,
-        ]);
+        return redirect()->route('login')->with('success', 'Registration successful. Please login.');
     }
 
     public function login(Request $request)
@@ -38,18 +35,11 @@ class LoginController extends Controller
         ]);
 
         if(Auth::attempt($request->only('email', 'password'))){
-            $user = $request->user();
-
-            $token = $user->createToken('api-token')->plainTextToken;
-
-            return response()->json([
-                'message' => 'Login successful',
-                'token' => $token,
-            ]);
+            $request->session()->regenerate();
+            return redirect()->route('dashboard');
         }
-        return response()->json([
-            'message' => 'Invalid credentials'
-        ], 401);
+        
+        return redirect()->back()->withErrors(['email' => 'Invalid credentials.']);
     }
 }
 
