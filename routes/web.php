@@ -31,5 +31,5 @@ Route::middleware('auth')->group(function () {
     Route::patch('/tickets/{ticket}/status', [TicketController::class, 'updateStatus']);
     Route::patch('/tickets/{ticket}/assignAgent', [TicketController::class, 'assignAgent']);
     Route::patch('/tickets/{ticket}/assignPriority', [TicketController::class, 'assignPriority']);
-    Route::post('/tickets/{ticket}/messages', [TicketMessageController::class, 'store']);
+    Route::post('/tickets/{ticket}/messages', [TicketMessageController::class, 'store'])->name('tickets.messages.store');
 });

@@ -56,7 +56,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Ticket::class);
     }
-
+    
+    //helper methods
     public function isAdmin(): bool
     {
         return $this->role === UserRole::Admin;

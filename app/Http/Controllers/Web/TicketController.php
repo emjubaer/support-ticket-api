@@ -15,6 +15,10 @@ class TicketController extends Controller
 
     public function show(Ticket $ticket){
         $this->authorize('view', $ticket);
+
+        //checking the messages and their users role
+       // dd($ticket->load('messages.user')->messages->map(fn ($msg)=> $msg->user?->role));
+       
         return view('admin/ticket-details', compact('ticket'));
     }
 }
