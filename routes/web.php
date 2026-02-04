@@ -11,9 +11,7 @@ Route::get('/', function () {
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin/dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [TicketController::class, 'dashboard'])->name('dashboard');
 });
 
 Route::get('/login', [LoginController::class, 'show'])->name('login');
@@ -27,7 +25,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth')->
 Route::middleware('auth')->group(function () {
     Route::get('/tickets', [TicketController::class, 'index'])->can('viewAny', App\Models\Ticket::class);
     Route::post('/tickets', [TicketController::class, 'store']);
-    Route::get('/tickets/{ticket}', [TicketController::class, 'show']);
+    Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
 
     // • PATCH /api/tickets/{id}/status (Agent/Admin)
     Route::patch('/tickets/{ticket}/status', [TicketController::class, 'updateStatus']);

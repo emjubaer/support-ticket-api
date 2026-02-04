@@ -13,7 +13,7 @@
     <aside class="w-64 bg-white shadow-lg">
         <div class="p-6 text-xl font-bold">Support Admin</div>
         <nav class="px-4 space-y-2">
-            <a href="/admin/dashboard" class="block px-4 py-2 rounded bg-blue-50 text-blue-600 font-medium">Dashboard</a>
+            <a href="{{ route('dashboard') }}" class="block px-4 py-2 rounded bg-blue-50 text-blue-600 font-medium">Dashboard</a>
             <a href="/admin/tickets" class="block px-4 py-2 rounded hover:bg-gray-100">Tickets</a>
             <a href="#" class="block px-4 py-2 rounded hover:bg-gray-100">Agents</a>
             <a href="#" class="block px-4 py-2 rounded hover:bg-gray-100">Customers</a>
