@@ -23,13 +23,21 @@ Route::post('/register', [LoginController::class, 'store'])->name('register.post
 Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/tickets', [TicketController::class, 'index'])->can('viewAny', App\Models\Ticket::class);
+    Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index')->can('viewAny', App\Models\Ticket::class);
     Route::post('/tickets', [TicketController::class, 'store']);
     Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
 
     // • PATCH /api/tickets/{id}/status (Agent/Admin)
-    Route::patch('/tickets/{ticket}/status', [TicketController::class, 'updateStatus']);
+    Route::patch('/tickets/{ticket}/status', [TicketController::class, 'updateStatus'])->name('tickets.updateStatus');
     Route::patch('/tickets/{ticket}/assignAgent', [TicketController::class, 'assignAgent']);
     Route::patch('/tickets/{ticket}/assignPriority', [TicketController::class, 'assignPriority']);
     Route::post('/tickets/{ticket}/messages', [TicketMessageController::class, 'store'])->name('tickets.messages.store');
+
+
+});
+
+Route::get('/test', function () {
+    return view('admin.tickets.ticket-details', [
+        'ticket' => App\Models\Ticket::with('messages.user')->first(),
+    ]);
 });

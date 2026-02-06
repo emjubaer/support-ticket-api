@@ -46,7 +46,6 @@ class Ticket extends Model
     {
         return $this->status === TicketStatus::Open;
     }
-
     public function isInProgress(): bool
     {
         return $this->status === TicketStatus::InProgress;
@@ -60,7 +59,7 @@ class Ticket extends Model
     {
         return $this->status === TicketStatus::Closed;
     }
-    
+
     public function canChangeToStatus(TicketStatus $newStatus): bool
     {
         if ($this->isOpen()) return $newStatus === TicketStatus::InProgress;   //current resolved , input open
