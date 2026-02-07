@@ -71,7 +71,7 @@
                                     class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-semibold">{{ $ticket->status->label() }}</span>
                             @elseif($ticket->isClosed())
                                 <span
-                                    class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">{{ $ticket->status->label() }}</span>
+                                    class="px-3 py-1 bg-red-300 text-white rounded-full text-xs font-semibold">{{ $ticket->status->label() }}</span>
                             @else
                                 <span
                                     class="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-xs font-semibold">{{ $ticket->status->label() }}</span>

@@ -29,8 +29,8 @@ Route::middleware('auth')->group(function () {
 
     // • PATCH /api/tickets/{id}/status (Agent/Admin)
     Route::patch('/tickets/{ticket}/status', [TicketController::class, 'updateStatus'])->name('tickets.updateStatus');
-    Route::patch('/tickets/{ticket}/assignAgent', [TicketController::class, 'assignAgent']);
-    Route::patch('/tickets/{ticket}/assignPriority', [TicketController::class, 'assignPriority']);
+    Route::patch('/tickets/assignAgent', [TicketController::class, 'assignAgent'])->name('assignAgent');
+    Route::patch('/tickets/assignPriority', [TicketController::class, 'assignPriority'])->name('changePriority');
     Route::post('/tickets/{ticket}/messages', [TicketMessageController::class, 'store'])->name('tickets.messages.store');
 
 
