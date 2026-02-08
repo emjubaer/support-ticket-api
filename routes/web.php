@@ -3,6 +3,7 @@
 use App\Http\Controllers\Web\LoginController;
 use App\Http\Controllers\Web\TicketController;
 use App\Http\Controllers\Web\TicketMessageController;
+use App\Models\Ticket;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -26,6 +27,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index')->can('viewAny', App\Models\Ticket::class);
     Route::post('/tickets', [TicketController::class, 'store']);
     Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
+
+    //Agents Route
+    Route::get('/agents', [TicketController::class, 'agentsIndex'])->name('agents.index');
+    Route::get('/agents/{agent}', [TicketController::class, 'agentDetails'])->name('agent.show');
 
     // • PATCH /api/tickets/{id}/status (Agent/Admin)
     Route::patch('/tickets/{ticket}/status', [TicketController::class, 'updateStatus'])->name('tickets.updateStatus');

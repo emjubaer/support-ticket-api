@@ -89,4 +89,17 @@ class TicketController extends Controller
 
         return redirect()->back()->with('success', 'Priority updated successfully');
     }
+
+    public function agentsIndex(){
+
+        $agents = User::where('role', UserRole::Agent)->withCount(relations: 'assignedTickets')->get();
+
+        return view('admin.agents.agentIndex', compact('agents'));
+    }
+
+    public function agentDetails(User $agent){
+        $agent->load('assignedTickets');
+
+        return view('admin.agents.agentDetails', compact('agent'));
+    }
 }

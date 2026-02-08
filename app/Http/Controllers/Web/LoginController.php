@@ -18,12 +18,14 @@ class LoginController extends Controller
             'name' => 'required|string',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:8',
+            'role' => 'nullable|in:customer,agent,admin',
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
+            'role' => $request->role ?? 'customer',
         ]);
 
         return redirect()->route('login')->with('success', 'Registration successful. Please login.');

@@ -290,35 +290,35 @@
         modal.classList.remove('flex');
     }
 
-    function submitAgentForm() {
-        const ticketId = document.getElementById('agentTicketId').value;
-        const agentId = document.getElementById('agentSelect').value;
-        const url = `/tickets/${ticketId}/assignAgent`;
+    // function submitAgentForm() {
+    //     const ticketId = document.getElementById('agentTicketId').value;
+    //     const agentId = document.getElementById('agentSelect').value;
+    //     const url = `/tickets/${ticketId}/assignAgent`;
 
-        fetch(url, {
-                method: 'PATCH',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '',
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: new URLSearchParams({
-                    agent_id: agentId,
-                    _method: 'PATCH'
-                })
-            })
-            .then(response => {
-                if (response.ok) {
-                    closeAgentModal();
-                    location.reload();
-                } else {
-                    alert('Error assigning agent');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error assigning agent');
-            });
-    }
+    //     fetch(url, {
+    //             method: 'PATCH',
+    //             headers: {
+    //                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '',
+    //                 'Content-Type': 'application/x-www-form-urlencoded',
+    //             },
+    //             body: new URLSearchParams({
+    //                 agent_id: agentId,
+    //                 _method: 'PATCH'
+    //             })
+    //         })
+    //         .then(response => {
+    //             if (response.ok) {
+    //                 closeAgentModal();
+    //                 location.reload();
+    //             } else {
+    //                 alert('Error assigning agent');
+    //             }
+    //         })
+    //         .catch(error => {
+    //             console.error('Error:', error);
+    //             alert('Error assigning agent');
+    //         });
+    // }
 
     // ===== Priority Modal Functions =====
     function openPriorityModal(ticketId) {

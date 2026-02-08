@@ -52,11 +52,17 @@ class User extends Authenticatable
         ];
     }
 
+    //relationships
     public function tickets()
     {
         return $this->hasMany(Ticket::class);
     }
-    
+
+    public function assignedTickets()
+    {
+        return $this->hasMany(Ticket::class, 'agent_id');
+    }
+
     //helper methods
     public function isAdmin(): bool
     {

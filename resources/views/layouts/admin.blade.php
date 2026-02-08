@@ -16,7 +16,7 @@
         <nav class="px-4 space-y-2">
             <a href="{{ route('dashboard') }}" class="block px-4 py-2 rounded {{ request()->routeIs('dashboard') ? 'bg-blue-50 text-blue-600' : 'hover:bg-gray-100' }} font-medium">Dashboard</a>
             <a href="{{ route('tickets.index') }}" class="block px-4 py-2 rounded {{ request()->routeIs('tickets.index') ? 'bg-blue-50 text-blue-600' : 'hover:bg-gray-100' }}">Tickets</a>
-            <a href="#" class="block px-4 py-2 rounded hover:bg-gray-100">Agents</a>
+            <a href="{{ route('agents.index') }}" class="block px-4 py-2 rounded {{ request()->routeIs('agentDetails') ? 'bg-blue-50 text-blue-600' : 'hover:bg-gray-100' }}">Agents</a>
             <a href="#" class="block px-4 py-2 rounded hover:bg-gray-100">Customers</a>
         </nav>
     </aside>
