@@ -14,6 +14,9 @@
     <div class="bg-white rounded-xl shadow ">
         <div class="p-5 border-b flex justify-between items-center">
             <h2 class="font-semibold">All Tickets</h2>
+            <a href="#" onclick="openCreateTicketModal()" class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 tex-sm font-medium ">
+                Create a New Ticket
+            </a>
         </div>
 
         <table class="w-full text-sm">
@@ -245,9 +248,86 @@
         </div>
     </div>
 
+
+    <!-- Create Ticket Modal -->
+    <div id="createTicketModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+        <div class="bg-white rounded-xl shadow-xl w-full max-w-md mx-4">
+
+            <!-- Header -->
+            <div class="px-6 py-4 border-b flex justify-between items-center">
+                <h3 class="text-lg font-semibold text-gray-800">
+                    👤 Create New Ticket
+                </h3>
+                <button onclick="closeCreateTicketModal()" class="text-gray-400 hover:text-gray-600">
+                    ✕
+                </button>
+            </div>
+
+            <!-- Body -->
+            <form action="{{ route('agents.store') }}" method="POST" class="px-6 py-5 space-y-4">
+                @csrf
+
+                <!-- Name -->
+                <div>
+                    <label class="block text-sm text-gray-700 mb-1">Agent Name</label>
+                    <input type="text" name="name" required
+                        class="w-full border rounded-lg p-2 text-sm focus:ring-blue-200 focus:border-blue-500"
+                        placeholder="Enter agent name">
+                </div>
+
+                <!-- Email -->
+                <div>
+                    <label class="block text-sm text-gray-700 mb-1">Email</label>
+                    <input type="email" name="email" required
+                        class="w-full border rounded-lg p-2 text-sm focus:ring-blue-200 focus:border-blue-500"
+                        placeholder="agent@email.com">
+                </div>
+
+                <!-- Password -->
+                <div>
+                    <label class="block text-sm text-gray-700 mb-1">Password</label>
+                    <input type="password" name="password" required
+                        class="w-full border rounded-lg p-2 text-sm focus:ring-blue-200 focus:border-blue-500"
+                        placeholder="********">
+                </div>
+
+                <!-- Role -->
+                <div>
+                    <label class="block text-sm text-gray-700 mb-1">Role</label>
+                    <select name="role"
+                        class="w-full border rounded-lg p-2 text-sm focus:ring-blue-200 focus:border-blue-500">
+                        <option value="agent">Agent</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+
+                <!-- Footer -->
+                <div class="flex justify-end gap-3 pt-4 border-t">
+                    <button type="button" onclick="closeCreateAgentModal()"
+                        class="px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-100">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700">
+                        Create Agent
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
 @endsection
 
 <script>
+
+    // Open the Create New Ticket Modal
+    function openCreateTicketModal(){
+        document.getElementById('createTicketModal').classList.remove('hidden');
+    }
+    function closeCreateTicketModal(){
+        document.getElementById('createTicketModal').classList.add('hidden');
+    }
+
     // ===== Dropdown Toggle Function =====
     function toggleDropdown(event, ticketId) {
         event.preventDefault();

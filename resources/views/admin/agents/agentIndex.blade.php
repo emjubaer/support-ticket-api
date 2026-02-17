@@ -101,7 +101,7 @@
             </div>
 
             <!-- Body -->
-            <form action="{{ route('register.post') }}" method="POST" class="px-6 py-5 space-y-4">
+            <form action="{{ route('agents.store') }}" method="POST" class="px-6 py-5 space-y-4">
                 @csrf
 
                 <!-- Name -->

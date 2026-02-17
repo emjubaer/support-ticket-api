@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\AgentController;
 use App\Http\Controllers\Web\LoginController;
 use App\Http\Controllers\Web\TicketController;
 use App\Http\Controllers\Web\TicketMessageController;
@@ -29,8 +30,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
 
     //Agents Route
-    Route::get('/agents', [TicketController::class, 'agentsIndex'])->name('agents.index');
-    Route::get('/agents/{agent}', [TicketController::class, 'agentDetails'])->name('agent.show');
+    Route::get('/agents', [AgentController::class, 'agentsIndex'])->name('agents.index');
+    Route::get('/agents/{agent}', [AgentController::class, 'agentDetails'])->name('agent.show');
+    Route::post('/agents', [AgentController::class, 'store'])->name('agents.store')->middleware('isAdmin');
 
     // • PATCH /api/tickets/{id}/status (Agent/Admin)
     Route::patch('/tickets/{ticket}/status', [TicketController::class, 'updateStatus'])->name('tickets.updateStatus');
