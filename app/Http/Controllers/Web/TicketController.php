@@ -7,6 +7,7 @@ use App\Enums\TicketStatus;
 use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StatusChangeRequest;
+use App\Http\Requests\StoreTicketRequest;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Services\TicketService;
@@ -90,7 +91,15 @@ class TicketController extends Controller
         return redirect()->back()->with('success', 'Priority updated successfully');
     }
 
+    public function createTicket(StoreTicketRequest $request, TicketService $ticketService){
+        $ticket = $ticketService->createTicket(
+            $request->subject,
+            $request->user(),
+            $request->message
+        );
+
+        return redirect()->route('tickets.show', $ticket)->with('success', 'Ticket created successfully');
+        }
 
 
-   
 }

@@ -26,7 +26,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth')->
 
 Route::middleware('auth')->group(function () {
     Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index')->can('viewAny', App\Models\Ticket::class);
-    Route::post('/tickets', [TicketController::class, 'store']);
+    Route::post('/tickets', [TicketController::class, 'createTicket'])->name('tickets.store');
     Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
 
     //Agents Route

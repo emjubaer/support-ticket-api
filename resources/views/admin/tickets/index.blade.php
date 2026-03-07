@@ -264,51 +264,33 @@
             </div>
 
             <!-- Body -->
-            <form action="{{ route('agents.store') }}" method="POST" class="px-6 py-5 space-y-4">
+            <form action="{{ route('tickets.store') }}" method="POST" class="px-6 py-5 space-y-4">
                 @csrf
 
-                <!-- Name -->
+                <!-- Subject -->
                 <div>
-                    <label class="block text-sm text-gray-700 mb-1">Agent Name</label>
-                    <input type="text" name="name" required
+                    <label class="block text-sm text-gray-700 mb-1">Subject</label>
+                    <input type="text" name="subject" required
                         class="w-full border rounded-lg p-2 text-sm focus:ring-blue-200 focus:border-blue-500"
-                        placeholder="Enter agent name">
+                        placeholder="Enter ticket subject">
                 </div>
 
-                <!-- Email -->
+                <!-- Message -->
                 <div>
-                    <label class="block text-sm text-gray-700 mb-1">Email</label>
-                    <input type="email" name="email" required
+                    <label class="block text-sm text-gray-700 mb-1">Message</label>
+                    <textarea name="message" required rows="4"
                         class="w-full border rounded-lg p-2 text-sm focus:ring-blue-200 focus:border-blue-500"
-                        placeholder="agent@email.com">
-                </div>
-
-                <!-- Password -->
-                <div>
-                    <label class="block text-sm text-gray-700 mb-1">Password</label>
-                    <input type="password" name="password" required
-                        class="w-full border rounded-lg p-2 text-sm focus:ring-blue-200 focus:border-blue-500"
-                        placeholder="********">
-                </div>
-
-                <!-- Role -->
-                <div>
-                    <label class="block text-sm text-gray-700 mb-1">Role</label>
-                    <select name="role"
-                        class="w-full border rounded-lg p-2 text-sm focus:ring-blue-200 focus:border-blue-500">
-                        <option value="agent">Agent</option>
-                        <option value="admin">Admin</option>
-                    </select>
+                        placeholder="Describe the issue in detail"></textarea>
                 </div>
 
                 <!-- Footer -->
                 <div class="flex justify-end gap-3 pt-4 border-t">
-                    <button type="button" onclick="closeCreateAgentModal()"
+                    <button type="button" onclick="closeCreateTicketModal()"
                         class="px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-100">
                         Cancel
                     </button>
                     <button type="submit" class="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700">
-                        Create Agent
+                        Create Ticket
                     </button>
                 </div>
             </form>
