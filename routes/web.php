@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Web\AgentController;
+use App\Http\Controllers\Web\CustomerController;
 use App\Http\Controllers\Web\LoginController;
 use App\Http\Controllers\Web\TicketController;
 use App\Http\Controllers\Web\TicketMessageController;
@@ -40,6 +41,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/tickets/assignPriority', [TicketController::class, 'assignPriority'])->name('changePriority');
     Route::post('/tickets/{ticket}/messages', [TicketMessageController::class, 'store'])->name('tickets.messages.store');
 
+    // Customers Route
+    Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
+    Route::get('/customers/{customer}', [CustomerController::class, 'show'])->name('customers.show');
 
 });
 
