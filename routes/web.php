@@ -48,10 +48,10 @@ Route::middleware('auth')->group(function () {
 });
 
 //Route for agent dashboard
-//Route::middleware(['auth', 'agent'])->group(function () {
-//});
+Route::middleware(['auth', 'agent'])->group(function () {
+    Route::get('/agent/dashboard', [AgentDashboardController::class, 'index'])->name('agent.dashboard');
+});
 
-Route::get('/agent/dashboard', [AgentDashboardController::class, 'index'])->name('agent.dashboard');
 
 
 
