@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\Agent\AgentDashboardController;
 use App\Http\Controllers\Web\AgentController;
 use App\Http\Controllers\Web\CustomerController;
 use App\Http\Controllers\Web\LoginController;
@@ -23,7 +24,7 @@ Route::post('/login', [LoginController::class, 'login'])->name('login.post');
 Route::get('/register', [LoginController::class, 'register'])->name('register');
 Route::post('/register', [LoginController::class, 'store'])->name('register.post');
 
-Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
     Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index')->can('viewAny', App\Models\Ticket::class);
@@ -44,8 +45,24 @@ Route::middleware('auth')->group(function () {
     // Customers Route
     Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
     Route::get('/customers/{customer}', [CustomerController::class, 'show'])->name('customers.show');
-
 });
+
+//Route for agent dashboard
+//Route::middleware(['auth', 'agent'])->group(function () {
+//});
+
+Route::get('/agent/dashboard', [AgentDashboardController::class, 'index'])->name('agent.dashboard');
+
+
+
+
+
+
+
+
+
+
+
 
 Route::get('/test', function () {
     return view('admin.tickets.ticket-details', [

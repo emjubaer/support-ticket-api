@@ -38,12 +38,29 @@ class LoginController extends Controller
             'password' => 'required|string',
         ]);
 
-        if(Auth::attempt($request->only('email', 'password'))){
+        $credentials = $request->only('email', 'password');
+
+        if(Auth::attempt($credentials)){
             $request->session()->regenerate();
-            return redirect()->route('dashboard');
+
+            if (Auth::user()->isAdmin()){
+                return redirect()->route('dashboard');
+            }
+            else if (Auth::user()->isAgent()){
+                return redirect()->route('agent.dashboard');
+            }
+            else{ return redirect()->route('login'); }
         }
 
         return redirect()->back()->with('error', 'Invalid credentials.');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('login')->with('success', 'Logged out successfully.');
     }
 
     public function show(){

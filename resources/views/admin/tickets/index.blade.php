@@ -1,9 +1,3 @@
-@php
-    // Removed inline helper; using a Blade partial for update-status forms.
-@endphp
-
-
-
 @extends('layouts.admin')
 
 @section('title', 'Tickets')

@@ -14,11 +14,11 @@ class CustomerController extends Controller
         $customers = User::where('role', UserRole::Customer)->withCount(
             'tickets'
         )->latest()->paginate(10);
-        return view('admin.customers.index', compact('customers'));
+        return view('admin/customer/index', compact('customers'));
     }
 
     public function show($id)
     {
-        return view('admin.customers.show', compact('id'));
+        return view('admin/customers/show', compact('id'));
     }
 }
