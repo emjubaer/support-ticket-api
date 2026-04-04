@@ -31,12 +31,20 @@ class TicketPolicy
     }
 
     /**
-     * Determine whether the user can update the model.
+     * Determine whether the user can update the ticket status.
      */
     public function updateStatus(User $user, Ticket $ticket, string $newStatus): bool
-    {
-        return $user->isAdmin() || $user->isAgent() && $ticket->canChangeToStatus(TicketStatus::from($newStatus));
+{
+    if ($user->isAdmin()) {
+        return $ticket->canChangeToStatus(TicketStatus::from($newStatus));
     }
+
+    if ($user->isAgent() && $ticket->agent_id === $user->id) {
+        return $ticket->canChangeToStatus(TicketStatus::from($newStatus));
+    }
+
+    return false;
+}
 
     public function assign(User $user, Ticket $ticket): bool
     {
