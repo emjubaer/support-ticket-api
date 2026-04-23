@@ -6,6 +6,7 @@ use App\Http\Controllers\Web\CustomerController;
 use App\Http\Controllers\Web\LoginController;
 use App\Http\Controllers\Web\TicketController;
 use App\Http\Controllers\Web\TicketMessageController;
+use App\Http\Middleware\AgentMiddleware;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\Route;
 
@@ -48,7 +49,7 @@ Route::middleware('auth')->group(function () {
 });
 
 //Route for agent dashboard
-Route::middleware(['auth', 'agent'])->group(function () {
+Route::middleware(['auth', AgentMiddleware::class])->group(function () {
     Route::get('/agent/dashboard', [AgentDashboardController::class, 'index'])->name('agent.dashboard');
 });
 

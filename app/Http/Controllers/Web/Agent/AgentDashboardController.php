@@ -23,6 +23,6 @@ class AgentDashboardController extends Controller
 
         $tickets = Ticket::with('customer')->where('agent_id', $agent->id)->latest()->take(10)->get();
 
-        return view('agent.dashboard', compact('stats', 'tickets'));
+        return view('agent.agentdashboard', compact('stats', 'tickets'));
     }
 }
