@@ -270,7 +270,7 @@
             </main>
         </div>
 
-        @if (Route::has('login'))
+        @if (Route::has('auth.login'))
             <div class="h-14.5 hidden lg:block"></div>
         @endif
     </body>

@@ -28,7 +28,7 @@ class LoginController extends Controller
             'role' => $request->role ?? 'customer',
         ]);
 
-        return redirect()->route('login')->with('success', 'Registration successful. Please login.');
+        return redirect()->route('auth.login')->with('success', 'Registration successful. Please login.');
     }
 
     public function login(Request $request)
@@ -49,7 +49,7 @@ class LoginController extends Controller
             else if (Auth::user()->isAgent()){
                 return redirect()->route('agent.dashboard');
             }
-            else{ return redirect()->route('login'); }
+            else{ return redirect()->route('auth.login'); }
         }
 
         return redirect()->back()->with('error', 'Invalid credentials.');
