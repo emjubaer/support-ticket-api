@@ -20,3 +20,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/tickets/{ticket}/assignPriority', [TicketController::class, 'assignPriority']);
     Route::post('/tickets/{ticket}/messages', [TicketMessageController::class, 'store']);
 });
+
+// 
