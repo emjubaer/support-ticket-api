@@ -25,4 +25,3 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/tickets/{ticket}/messages', [TicketMessageController::class, 'store']);
 });
 
-//
