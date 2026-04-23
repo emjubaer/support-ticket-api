@@ -18,7 +18,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [TicketController::class, 'dashboard'])->name('dashboard');
 });
 
-Route::get('/login', [LoginController::class, 'show'])->name('login');
+Route::get('/login', [LoginController::class, 'show'])->name('auth.login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.post');
 
 Route::get('/register', [LoginController::class, 'register'])->name('register');
