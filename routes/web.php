@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
     //Agents Route
     Route::get('/agents', [AgentController::class, 'agentsIndex'])->name('agents.index');
     Route::get('/agents/{agent}', [AgentController::class, 'agentDetails'])->name('agent.show');
-    Route::post('/agents', [AgentController::class, 'store'])->name('agents.store')->middleware('isAdmin');
+    Route::post('/agents', [AgentController::class, 'store'])->name('agents.store');
 
     // • PATCH /api/tickets/{id}/status (Agent/Admin)
     Route::patch('/tickets/{ticket}/status', [TicketController::class, 'updateStatus'])->name('tickets.updateStatus');

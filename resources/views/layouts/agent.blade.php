@@ -14,54 +14,7 @@
     <div class="flex min-h-screen">
 
         <!-- Sidebar -->
-        <aside class="w-64 bg-gray-900 text-white min-h-screen p-5">
-            <div class="mb-8">
-                <h2 class="text-2xl font-bold text-blue-400">Agent Panel</h2>
-                <p class="text-sm text-gray-400 mt-1">Support Ticket System</p>
-            </div>
-
-            <nav class="space-y-2">
-                <a href="{{ route('agent.dashboard') }}"
-                    class="block px-4 py-3 rounded-lg hover:bg-gray-800 transition {{ request()->routeIs('agent.dashboard') ? 'bg-blue-600 text-white' : 'text-gray-300' }}">
-                    Dashboard
-                </a>
-
-                <a href="#"
-                    class="block px-4 py-3 rounded-lg hover:bg-gray-800 transition {{ request()->routeIs('agent.tickets.assigned') ? 'bg-blue-600 text-white' : 'text-gray-300' }}">
-                    My Assigned Tickets
-                </a>
-
-                <a href="#"
-                    class="block px-4 py-3 rounded-lg hover:bg-gray-800 transition {{ request()->routeIs('agent.tickets.open') ? 'bg-blue-600 text-white' : 'text-gray-300' }}">
-                    Open Tickets
-                </a>
-
-                <a href="#"
-                    class="block px-4 py-3 rounded-lg hover:bg-gray-800 transition {{ request()->routeIs('agent.tickets.in_progress') ? 'bg-blue-600 text-white' : 'text-gray-300' }}">
-                    In Progress Tickets
-                </a>
-
-                <a href="#"
-                    class="block px-4 py-3 rounded-lg hover:bg-gray-800 transition {{ request()->routeIs('agent.tickets.resolved') ? 'bg-blue-600 text-white' : 'text-gray-300' }}">
-                    Resolved Tickets
-                </a>
-
-                <a href="#"
-                    class="block px-4 py-3 rounded-lg hover:bg-gray-800 transition {{ request()->routeIs('agent.tickets.closed') ? 'bg-blue-600 text-white' : 'text-gray-300' }}">
-                    Closed Tickets
-                </a>
-
-                <a href="#"
-                    class="block px-4 py-3 rounded-lg hover:bg-gray-800 transition {{ request()->routeIs('agent.messages.index') ? 'bg-blue-600 text-white' : 'text-gray-300' }}">
-                    Replies / Messages
-                </a>
-
-                <a href="#"
-                    class="block px-4 py-3 rounded-lg hover:bg-gray-800 transition {{ request()->routeIs('agent.profile') ? 'bg-blue-600 text-white' : 'text-gray-300' }}">
-                    Profile
-                </a>
-            </nav>
-        </aside>
+        @include('components.sidebar')  
 
         <!-- Main Content -->
         <div class="flex-1 flex flex-col">
