@@ -5,6 +5,10 @@ use App\Http\Controllers\API\TicketController;
 use App\Http\Controllers\API\TicketMessageController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/welcome', function () {
+    return response()->json(['message' => 'Welcome to the API']);
+});
+
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/register', [LoginController::class, 'register']);
 Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
@@ -21,4 +25,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/tickets/{ticket}/messages', [TicketMessageController::class, 'store']);
 });
 
-// 
+//
