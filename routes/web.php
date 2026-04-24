@@ -2,13 +2,16 @@
 
 use App\Http\Controllers\Web\Agent\AgentDashboardController;
 use App\Http\Controllers\Web\AgentController;
+use App\Http\Controllers\Web\Customer\CustomerDashboardController;
 use App\Http\Controllers\Web\CustomerController;
 use App\Http\Controllers\Web\LoginController;
 use App\Http\Controllers\Web\TicketController;
 use App\Http\Controllers\Web\TicketMessageController;
+use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\AgentMiddleware;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\Route;
+use PHPUnit\Metadata\Group;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,6 +23,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('/login', [LoginController::class, 'show'])->name('auth.login');
+Route::get('/login', [LoginController::class, 'show'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.post');
 
 Route::get('/register', [LoginController::class, 'register'])->name('register');
@@ -28,6 +32,7 @@ Route::post('/register', [LoginController::class, 'store'])->name('register.post
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
+
     Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index')->can('viewAny', App\Models\Ticket::class);
     Route::post('/tickets', [TicketController::class, 'createTicket'])->name('tickets.store');
     Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
@@ -51,6 +56,17 @@ Route::middleware('auth')->group(function () {
 //Route for agent dashboard
 Route::middleware(['auth', AgentMiddleware::class])->group(function () {
     Route::get('/agent/dashboard', [AgentDashboardController::class, 'index'])->name('agent.dashboard');
+    Route::get('/agent/tickets', [AgentDashboardController::class, 'ticketIndex'])->name('agent.tickets');
+    Route::get('/agent/tickets/{ticket}', [AgentDashboardController::class, 'ticketDetails'])->name('agent.tickets.show');
+});
+
+
+//Route for Customer
+Route::middleware('auth')->group(function () {
+    Route::get('/customer/dashboard', [CustomerDashboardController::class, 'index'])->name('customer.dashboard');
+    Route::get('/customer/tickets', [CustomerDashboardController::class, 'ticketIndex'])->name('customer.ticket');
+    Route::get('/customer/tickets/{ticket}', [CustomerDashboardController::class, 'ticketDetails'])->name('customer.ticket.show');
+    Route::post('/customer/tickets/{ticket}/messages', [CustomerDashboardController::class, 'store'])->name('customer.tickets.messages.store');
 });
 
 

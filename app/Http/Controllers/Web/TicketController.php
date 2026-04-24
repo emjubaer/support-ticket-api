@@ -34,7 +34,7 @@ class TicketController extends Controller
             'in_progress' => Ticket::where('status', TicketStatus::InProgress)->count(),
             'closed' => Ticket::where('status', TicketStatus::Closed)->count(),
         ];
-        return view('admin/dashboard', compact('tickets', 'stats'));
+        return view('admin.admin_dashboard', compact('tickets', 'stats'));
     }
 
     public function show(Ticket $ticket)

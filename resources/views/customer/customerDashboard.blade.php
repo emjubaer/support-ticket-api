@@ -1,4 +1,4 @@
-@extends('layouts.agent')
+@extends('layouts.customer')
 
 @section('title', 'Dashboard')
 @section('page_title', 'Dashboard')
@@ -7,6 +7,7 @@
 
     <!-- Stats -->
     <div class="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
+
         <div class="bg-white p-5 rounded-xl shadow">
             <p class="text-sm text-gray-500">My Total Tickets</p>
             <p class="text-2xl font-bold">{{ $stats['total'] ?? 0 }}</p>
@@ -14,49 +15,72 @@
 
         <div class="bg-white p-5 rounded-xl shadow">
             <p class="text-sm text-gray-500">Open</p>
-            <p class="text-2xl font-bold text-blue-600">{{ $stats['open'] ?? 0 }}</p>
+            <p class="text-2xl font-bold text-blue-600">
+                {{ $stats['open'] ?? 0 }}
+            </p>
         </div>
 
         <div class="bg-white p-5 rounded-xl shadow">
             <p class="text-sm text-gray-500">In Progress</p>
-            <p class="text-2xl font-bold text-yellow-500">{{ $stats['in_progress'] ?? 0 }}</p>
+            <p class="text-2xl font-bold text-yellow-500">
+                {{ $stats['in_progress'] ?? 0 }}
+            </p>
         </div>
 
         <div class="bg-white p-5 rounded-xl shadow">
             <p class="text-sm text-gray-500">Resolved</p>
-            <p class="text-2xl font-bold text-green-600">{{ $stats['resolved'] ?? 0 }}</p>
+            <p class="text-2xl font-bold text-green-600">
+                {{ $stats['resolved'] ?? 0 }}
+            </p>
         </div>
 
         <div class="bg-white p-5 rounded-xl shadow">
             <p class="text-sm text-gray-500">Closed</p>
-            <p class="text-2xl font-bold text-red-600">{{ $stats['closed'] ?? 0 }}</p>
+            <p class="text-2xl font-bold text-red-600">
+                {{ $stats['closed'] ?? 0 }}
+            </p>
         </div>
+
     </div>
 
     <!-- Ticket Table -->
     <div class="bg-white rounded-xl shadow">
+
         <div class="p-5 border-b flex justify-between items-center">
-            <h2 class="font-semibold">Recent Assigned Tickets</h2>
+            <h2 class="font-semibold">
+                My Recent Tickets
+            </h2>
         </div>
 
         <table class="w-full text-sm">
+
             <thead class="bg-gray-50">
                 <tr>
                     <th class="p-3 text-left">#</th>
                     <th class="p-3 text-left">Subject</th>
                     <th class="p-3">Priority</th>
                     <th class="p-3">Status</th>
-                    <th class="p-3">Customer</th>
+                    <th class="p-3">Assigned Agent</th>
                     <th class="p-3">Action</th>
                 </tr>
             </thead>
+
             <tbody>
+
                 @forelse($tickets as $ticket)
                     <tr class="border-t">
-                        <td class="p-3">{{ $ticket->id }}</td>
-                        <td class="p-3">{{ $ticket->subject }}</td>
 
+                        <td class="p-3">
+                            {{ $ticket->id }}
+                        </td>
+
+                        <td class="p-3">
+                            {{ $ticket->subject }}
+                        </td>
+
+                        <!-- Priority -->
                         <td class="p-3 text-center">
+
                             @if ($ticket->priority?->value === 'high')
                                 <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-xs font-semibold">
                                     {{ $ticket->priority->label() }}
@@ -78,9 +102,12 @@
                                     N/A
                                 </span>
                             @endif
+
                         </td>
 
+                        <!-- Status -->
                         <td class="p-3 text-center">
+
                             @if ($ticket->isOpen())
                                 <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-semibold">
                                     {{ $ticket->status->label() }}
@@ -102,33 +129,48 @@
                                     {{ $ticket->status->label() }}
                                 </span>
                             @endif
+
                         </td>
 
+                        <!-- Agent -->
                         <td class="p-3 text-center">
-                            @if ($ticket->customer)
+
+                            @if ($ticket->agent)
                                 <span class="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-xs font-semibold">
-                                    {{ $ticket->customer->name }}
+                                    {{ $ticket->agent->name }}
                                 </span>
                             @else
                                 <span class="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-xs font-semibold">
-                                    N/A
+                                    Not Assigned
                                 </span>
                             @endif
+
                         </td>
 
+                        <!-- Action -->
                         <td class="p-3 text-center">
-                            <a href="{{route('agent.tickets.show', $ticket)}}" class="text-blue-600 hover:underline">
+
+                            <a href="{{ route('customer.ticket.show', $ticket) }}" class="text-blue-600 hover:underline">
                                 View
                             </a>
+
+                        </td>
+
+                    </tr>
+
+                @empty
+
+                    <tr>
+                        <td colspan="6" class="p-6 text-center text-gray-500">
+                            No tickets found
                         </td>
                     </tr>
-                @empty
-                    <tr>
-                        <td colspan="6" class="p-6 text-center text-gray-500">No assigned tickets found</td>
-                    </tr>
                 @endforelse
+
             </tbody>
+
         </table>
+
     </div>
 
 @endsection

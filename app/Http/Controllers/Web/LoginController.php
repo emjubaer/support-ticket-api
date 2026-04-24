@@ -49,7 +49,7 @@ class LoginController extends Controller
             else if (Auth::user()->isAgent()){
                 return redirect()->route('agent.dashboard');
             }
-            else{ return redirect()->route('auth.login'); }
+            else{ return redirect()->route('customer.dashboard'); }
         }
 
         return redirect()->back()->with('error', 'Invalid credentials.');
@@ -60,7 +60,7 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('auth.login')->with('success', 'Logged out successfully.');
+        return redirect()->route('login')->with('success', 'Logged out successfully.');
     }
 
     public function show(){

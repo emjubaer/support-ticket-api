@@ -14,7 +14,7 @@ class CustomerController extends Controller
         $customers = User::where('role', UserRole::Customer)->withCount(
             'tickets'
         )->latest()->paginate(10);
-        return view('admin/customer/index', compact('customers'));
+        return view('admin.customer.index', compact('customers'));
     }
 
     public function show($id)
