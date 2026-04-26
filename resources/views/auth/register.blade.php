@@ -70,7 +70,7 @@
         <!-- Login Link -->
         <p class="text-center text-sm text-gray-500 mt-6">
             Already have an account?
-            <a href="{{ route('auth.login') }}" class="text-blue-600 hover:underline">Login</a>
+            <a href="{{ route('login') }}" class="text-blue-600 hover:underline">Login</a>
         </p>
     </div>
 

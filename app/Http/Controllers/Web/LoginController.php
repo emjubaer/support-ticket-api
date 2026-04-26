@@ -28,7 +28,7 @@ class LoginController extends Controller
             'role' => $request->role ?? 'customer',
         ]);
 
-        return redirect()->route('auth.login')->with('success', 'Registration successful. Please login.');
+        return redirect()->route('login')->with('success', 'Registration successful. Please login.');
     }
 
     public function login(Request $request)
