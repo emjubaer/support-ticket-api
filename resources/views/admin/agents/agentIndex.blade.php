@@ -134,7 +134,6 @@
                     <select name="role"
                         class="w-full border rounded-lg p-2 text-sm focus:ring-blue-200 focus:border-blue-500">
                         <option value="agent">Agent</option>
-                        <option value="admin">Admin</option>
                     </select>
                 </div>
 

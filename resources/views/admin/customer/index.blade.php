@@ -13,6 +13,7 @@
             <thead class="bg-gray-50">
                 <tr>
                     <th class="p-3 text-left">#</th>
+                    <th class="p-3 text-left">ID</th>
                     <th class="p-3 text-left">Customer</th>
                     <th class="p-3 text-left">Email</th>
                     <th class="p-3 text-center">Total Tickets</th>
@@ -26,6 +27,7 @@
             <tbody>
                 @forelse($customers as $customer)
                     <tr class="border-t">
+                        <td class="p-3">{{ $loop->iteration }}</td>
                         <td class="p-3">{{ $customer->id }}</td>
 
                         <td class="p-3">
