@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Customer;
 use App\Enums\TicketStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddMessageRequest;
+use App\Http\Requests\StoreTicketRequest;
 use App\Models\Ticket;
 use App\Services\TicketService;
 use Illuminate\Http\Request;
@@ -67,6 +68,17 @@ class CustomerDashboardController extends Controller
 
         return view('customer.ticketDetails', compact('ticket'));
     }
+
+    public function createTicket(StoreTicketRequest $request, TicketService $ticketService){
+        $ticket = $ticketService->createTicket(
+            $request->subject,
+            $request->user(),
+            $request->message
+        );
+
+        return redirect()->route('customer.ticket.show', $ticket)->with('success', 'Ticket created successfully');
+        }
+
 
 
 public function store(AddMessageRequest $request, Ticket $ticket, TicketService $ticketService)

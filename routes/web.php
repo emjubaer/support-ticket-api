@@ -60,12 +60,12 @@ Route::middleware(['auth', AgentMiddleware::class])->group(function () {
     Route::get('/agent/tickets/{ticket}', [AgentDashboardController::class, 'ticketDetails'])->name('agent.tickets.show');
 });
 
-
 //Route for Customer
 Route::middleware('auth')->group(function () {
     Route::get('/customer/dashboard', [CustomerDashboardController::class, 'index'])->name('customer.dashboard');
     Route::get('/customer/tickets', [CustomerDashboardController::class, 'ticketIndex'])->name('customer.ticket');
     Route::get('/customer/tickets/{ticket}', [CustomerDashboardController::class, 'ticketDetails'])->name('customer.ticket.show');
+    Route::post('/customer/tickets', [CustomerDashboardController::class, 'createTicket'])->name('customer.tickets.store');
     Route::post('/customer/tickets/{ticket}/messages', [CustomerDashboardController::class, 'store'])->name('customer.tickets.messages.store');
 });
 

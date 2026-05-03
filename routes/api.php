@@ -3,6 +3,8 @@
 use App\Http\Controllers\API\LoginController;
 use App\Http\Controllers\API\TicketController;
 use App\Http\Controllers\API\TicketMessageController;
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/welcome', function () {
@@ -25,3 +27,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/tickets/{ticket}/messages', [TicketMessageController::class, 'store']);
 });
 
+
+Route::get('/testmail', function () {
+    $admin = User::admins()->first();
+    // dd($admin->email);
+    // $admin->notify((new InvoicePaid($invoice));
+
+
+   Mail::to($admin->email)->send(new App\Mail\TestMail());
+   return response()->json(['message' => 'Test email sent successfully']);
+});

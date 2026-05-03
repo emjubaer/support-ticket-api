@@ -159,7 +159,7 @@
 
             </div>
 
-            <form action="{{ route('tickets.store') }}" method="POST" class="px-6 py-5 space-y-4">
+            <form action="{{ route('customer.tickets.store') }}" method="POST" class="px-6 py-5 space-y-4">
 
                 @csrf
 
