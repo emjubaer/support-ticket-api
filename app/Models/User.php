@@ -83,6 +83,10 @@ class User extends Authenticatable
     {
         return $query->where('role', UserRole::Admin);
     }
+    public function scopeCustomers(Builder $query)
+    {
+        return $query->where('role', UserRole::Customer);
+    }
 
     // public function doSomething(): static
     // {

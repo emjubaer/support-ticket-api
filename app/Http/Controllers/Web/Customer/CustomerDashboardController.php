@@ -6,9 +6,13 @@ use App\Enums\TicketStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddMessageRequest;
 use App\Http\Requests\StoreTicketRequest;
+use App\Mail\AdminTicketCreateMail;
+use App\Mail\CustomerTicketCreateMail;
 use App\Models\Ticket;
+use App\Models\User;
 use App\Services\TicketService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class CustomerDashboardController extends Controller
 {
@@ -75,6 +79,13 @@ class CustomerDashboardController extends Controller
             $request->user(),
             $request->message
         );
+        // dd($ticket->messages->first()->message);
+        // dd($request->user()->email);
+        // Mail::to($request->user()->email)->send(new CustomerTicketCreateMail($ticket));
+        $admin = User::admins()->first();
+        Mail::to($admin->email)->send(new AdminTicketCreateMail($ticket));
+
+
 
         return redirect()->route('customer.ticket.show', $ticket)->with('success', 'Ticket created successfully');
         }

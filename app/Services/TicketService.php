@@ -43,7 +43,7 @@ class TicketService
                 'message' => $message,
             ]);
 
-            return $ticket->load('messages');
+            return $ticket->load('messages', 'customer');
         });
     }
 
