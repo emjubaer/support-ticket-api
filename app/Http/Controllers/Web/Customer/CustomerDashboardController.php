@@ -81,7 +81,7 @@ class CustomerDashboardController extends Controller
         );
         // dd($ticket->messages->first()->message);
         // dd($request->user()->email);
-        // Mail::to($request->user()->email)->send(new CustomerTicketCreateMail($ticket));
+        Mail::to($request->user()->email)->send(new CustomerTicketCreateMail($ticket));
         $admin = User::admins()->first();
         Mail::to($admin->email)->send(new AdminTicketCreateMail($ticket));
 
