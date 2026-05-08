@@ -109,7 +109,7 @@
 
                                 @forelse(auth()->user()->unreadNotifications as $notification)
 
-                                    <a href="#"
+                                    <a href="{{ route('notifications.show', $notification->id) }}"
                                         class="block px-4 py-3 border-b hover:bg-gray-50 transition">
 
                                         <div class="flex items-start gap-3">

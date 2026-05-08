@@ -69,7 +69,22 @@ Route::middleware('auth')->group(function () {
     Route::post('/customer/tickets/{ticket}/messages', [CustomerDashboardController::class, 'store'])->name('customer.tickets.messages.store');
 });
 
+Route::get('/notifications/{notification}', function ($notificationId) {
+    $notification = auth()->user()->notifications()->findOrFail($notificationId);
 
+    // Mark as read
+    if ($notification->unread()) {
+        $notification->markAsRead();
+    }
+
+    // Redirect to the relevant page (e.g., ticket details)
+    $data = $notification->data;
+    if (isset($data['ticket_id'])) {
+        return redirect()->route('customer.ticket.show', $data['ticket_id']);
+    }
+
+    return redirect()->back();
+})->name('notifications.show');
 
 
 

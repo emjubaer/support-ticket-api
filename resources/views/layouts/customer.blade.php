@@ -74,7 +74,7 @@
                         <div class="max-h-96 overflow-y-auto">
 
                             @forelse(auth()->user()->unreadNotifications as $notification)
-                                <a href="#" class="block px-4 py-3 border-b hover:bg-gray-50 transition">
+                                <a href="{{ route('notifications.show', $notification->id) }}" class="block px-4 py-3 border-b hover:bg-gray-50 transition">
 
                                     <div class="flex items-start gap-3">
 

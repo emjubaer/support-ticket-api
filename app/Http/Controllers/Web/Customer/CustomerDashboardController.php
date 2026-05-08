@@ -21,8 +21,8 @@ class CustomerDashboardController extends Controller
 
         // Security Check
         //if (!$customer->isCustomer()) {
-       //     abort(403, 'Unauthorized');
-      //  }
+        //     abort(403, 'Unauthorized');
+        //  }
 
         // Base Query (customer specific tickets)
         $baseQuery = Ticket::where('user_id', $customer->id);
@@ -54,7 +54,7 @@ class CustomerDashboardController extends Controller
         return view('customer.customerDashboard', compact('stats', 'tickets'));
     }
 
-     public function ticketIndex(Request $request)
+    public function ticketIndex(Request $request)
     {
         $customer = $request->user();
         // if (!$customer->isCustomer()) {
@@ -66,13 +66,15 @@ class CustomerDashboardController extends Controller
         return view('customer.customerTicketIndex', compact('tickets'));
     }
 
-    public function ticketDetails(Ticket $ticket){
+    public function ticketDetails(Ticket $ticket)
+    {
         // $this->authorize('view', $ticket);
 
         return view('customer.ticketDetails', compact('ticket'));
     }
 
-    public function createTicket(StoreTicketRequest $request, TicketService $ticketService){
+    public function createTicket(StoreTicketRequest $request, TicketService $ticketService)
+    {
         $ticket = $ticketService->createTicket(
             $request->subject,
             $request->user(),
@@ -93,11 +95,9 @@ class CustomerDashboardController extends Controller
         $admin->notify(new AdminTicketNotificaton($ticket));
 
         return redirect()->route('customer.ticket.show', $ticket)->with('success', 'Ticket created successfully');
-        }
+    }
 
-
-
-public function store(AddMessageRequest $request, Ticket $ticket, TicketService $ticketService)
+    public function store(AddMessageRequest $request, Ticket $ticket, TicketService $ticketService)
     {
         $message = $ticketService->addMessageToTicket(
             $ticket,
@@ -107,5 +107,4 @@ public function store(AddMessageRequest $request, Ticket $ticket, TicketService 
 
         return redirect()->route('customer.ticket.show', $ticket);
     }
-
 }
