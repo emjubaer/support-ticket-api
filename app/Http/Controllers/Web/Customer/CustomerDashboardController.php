@@ -92,7 +92,12 @@ class CustomerDashboardController extends Controller
         // Mail::to($admin->email)->queue(new AdminTicketCreateMail($ticket));
 
         // to send notification to admin
-        $admin->notify(new AdminTicketNotificaton($ticket));
+        try {
+            $admin->notify((new AdminTicketNotificaton($ticket))->delay(now()->addSeconds(10)));
+        } catch (\Exception $e) {
+            // Log the error or handle it as needed
+            logger()->error('Failed to send admin notification: ' . $e->getMessage());
+        }
 
         return redirect()->route('customer.ticket.show', $ticket)->with('success', 'Ticket created successfully');
     }

@@ -19,6 +19,7 @@ class CustomerTicketNotification extends Notification implements ShouldQueue
      */
     public function __construct($ticket)
     {
+        logger()->info('Initializing CustomerTicketNotification with ticket ID: ' . $ticket->id);
         $this->ticket = $ticket;
     }
 
@@ -37,6 +38,7 @@ class CustomerTicketNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
+        logger()->info('Preparing to send CustomerTicketNotification email for ticket ID: ' . $this->ticket->id);
         return (new CustomerTicketCreateMail ($this->ticket))
             ->to($notifiable->email);
     }
